@@ -1,9 +1,14 @@
 import Express from "express";
 import dotenv from "dotenv";
 import ConnectDB from "./DB/db.js";
+import cors from "cors";
+import authRoutes from "./routes/authRoute.js";
 
 const app = Express();
 dotenv.config();
+app.use(cors());
+app.use(Express.json());
+app.use(Express.static("public"));
 
 app.get("/", (req, res) => {
   res.send("<h1>Rent Your House</h1>");
@@ -11,6 +16,8 @@ app.get("/", (req, res) => {
 
 app.use(Express.json());
 ConnectDB();
+
+app.use("/api/auth", authRoutes);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {

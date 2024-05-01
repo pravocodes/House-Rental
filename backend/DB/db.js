@@ -6,6 +6,7 @@ const ConnectDB = async () => {
     await mongoose.connect(process.env.MONGOURI);
     console.log("Successfully Connected to Database".bgGreen.white);
   } catch (error) {
+    console.log(error);
     console.log("Error in connecting to database".bgRed.white);
   }
 };
