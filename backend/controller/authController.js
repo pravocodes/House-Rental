@@ -1,6 +1,7 @@
 import { comparePassword, hashPassword } from "./../helper/authHelper.js";
 import User from "../models/User.js";
 import multer from "multer";
+import jwt from "jsonwebtoken";
 
 export const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -52,5 +53,35 @@ export const registerController = async (req, res) => {
     res
       .status(500)
       .json({ message: "Registration failed!", error: err.message });
+  }
+};
+
+export const loginController = async (req, res) => {
+  try {
+    /* Take the infomation from the form */
+    const { email, password } = req.body;
+
+    /* Check if user exists */
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res
+        .status(409)
+        .json({ sucsess: false, message: "User doesn't exist!" });
+    }
+
+    /* Compare the password with the hashed password */
+    const isMatch = await comparePassword(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({sucsess:false, message: "Invalid Credentials!" });
+    }
+
+    /* Generate JWT token */
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    delete user.password;
+
+    res.status(200).json({ token, user,success:true });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: err.message });
   }
 };
