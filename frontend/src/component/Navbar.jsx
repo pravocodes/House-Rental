@@ -34,7 +34,9 @@ const Navbar = () => {
         <IconButton disabled={search === ""}>
           <Search
             sx={{ color: "#F8395A" }}
-            onClick={() => {navigate(`/properties/search/${search}`)}}
+            onClick={() => {
+              navigate(`/properties/search/${search}`);
+            }}
           />
         </IconButton>
       </div>
@@ -56,14 +58,13 @@ const Navbar = () => {
         >
           <Menu sx={{ color: "#969393" }} />
           {!user ? (
-            <Person sx={{ color: "#969393"}} />
+            <Person sx={{ color: "#969393" }} />
           ) : (
             <img
-              src={`http://localhost:5000/${user.profileImagePath.replace(
-                "public",
-                ""
-              )}`}
-              alt="profile photo"
+              src={`${
+                process.env.REACT_APP_API_URL
+              }/${user.profileImagePath.replace("public", "")}`}
+              alt="profile pic"
               style={{ objectFit: "cover", borderRadius: "50%" }}
             />
           )}
@@ -76,8 +77,7 @@ const Navbar = () => {
           </div>
         )}
 
-        {
-        dropdownMenu && user && (
+        {dropdownMenu && user && (
           <div className="navbar_right_accountmenu">
             <Link to={`/${user._id}/trips`}>Trip List</Link>
             <Link to={`/${user._id}/wishList`}>Wish List</Link>

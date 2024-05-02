@@ -6,19 +6,19 @@ import { useSelector, useDispatch } from "react-redux";
 import { setListings } from "../redux/state";
 import Loader from "../component/Loader";
 import ListingCard from "../component/ListingCard";
-import Footer from "../component/Footer"
+import Footer from "../component/Footer";
 
 const CategoryPage = () => {
   const [loading, setLoading] = useState(true);
-  const { category } = useParams()
+  const { category } = useParams();
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const listings = useSelector((state) => state.listings);
 
   const getFeedListings = async () => {
     try {
       const response = await fetch(
-          `http://localhost:5000/api/properties?category=${category}`,
+        `${process.env.REACT_APP_API_URL}/api/properties?category=${category}`,
         {
           method: "GET",
         }

@@ -18,8 +18,8 @@ const Listings = () => {
     try {
       const response = await fetch(
         selectedCategory !== "All"
-          ? `http://localhost:5000/api/properties?category=${selectedCategory}`
-          : "http://localhost:5000/api/properties",
+          ? `${process.env.REACT_APP_API_URL}/api/properties?category=${selectedCategory}`
+          : `${process.env.REACT_APP_API_URL}/api/properties`,
         {
           method: "GET",
         }

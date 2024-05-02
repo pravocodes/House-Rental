@@ -17,9 +17,12 @@ const SearchPage = () => {
 
   const getSearchListings = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/properties/search/${search}`, {
-        method: "GET"
-      })
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/properties/search/${search}`,
+        {
+          method: "GET",
+        }
+      );
 
       const data = await response.json()
       dispatch(setListings({ listings: data }))
