@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import ConnectDB from "./DB/db.js";
 import cors from "cors";
 import authRoutes from "./routes/authRoute.js";
+import listingRoutes from "./routes/listingRoute.js";
 
 const app = Express();
 dotenv.config();
@@ -18,6 +19,7 @@ app.use(Express.json());
 ConnectDB();
 
 app.use("/api/auth", authRoutes);
+app.use("/api/properties", listingRoutes);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
